@@ -1,0 +1,27 @@
+<div style="position: relative">
+  <div class="timeline-wrapper">
+    <div class="timeline">
+      {% for item in items %}
+      <div class="timeline-item">
+        <div class="timeline-dot-wrapper">
+          <div class="timeline-dot"></div>
+        </div>
+        <div class="timeline-content">
+          <div class="timeline-card">
+            <div class="changelog-time" id="{{ item.time }}">{{ item.time }}<a class="headerlink" href="#{{ item.time }}" title="Permanent link">¶</a></div>
+            <div class="changelog-content">
+              {% for change in item.changes %}
+                {% if change.content.href %}
+                  <p><span class="changelog-type changelog-type-{{ change.type }}"></span> <a href="{{ change.content.href }}">{{ change.content.text }}</a></p>
+                {% else %}
+                  <p><span class="changelog-type changelog-type-{{ change.type }}"></span> {{ change.content }}</p>
+                {% endif %}
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  </div>
