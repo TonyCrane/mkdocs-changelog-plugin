@@ -3,6 +3,7 @@ import re
 
 import yaml
 from jinja2 import Template
+from rich import print
 
 from mkdocs.config import config_options
 from mkdocs.plugins import BasePlugin
@@ -48,14 +49,14 @@ class ChangelogPlugin(BasePlugin):
 
         changelog_items = self._get_changelog_items()
 
-        changelog = Template(TEMPLATE).render(items=changelog_items)
-
-        markdown = re.sub(
-            r"\{\{\s*changelog\s*\}\}",
-            changelog,
-            markdown,
-            flags=re.IGNORECASE,
-        )
+        for placeholder, items in changelog_items.items():
+            changelog = Template(TEMPLATE).render(items=items)
+            markdown = re.sub(
+                r"\{\{\s*%s\s*\}\}" % placeholder,
+                changelog,
+                markdown,
+                flags=re.IGNORECASE,
+            )
 
         return markdown
 
@@ -73,7 +74,7 @@ class ChangelogPlugin(BasePlugin):
             assert os.path.exists(src_file_path)
             copy_file(src_file_path, dest_file_path)
     
-    def _get_changelog_items(self) -> list:
+    def _get_changelog_items(self) -> dict:
         changelog_file = self.config.get('file')
         
         with open(changelog_file, "r") as f:
@@ -81,17 +82,22 @@ class ChangelogPlugin(BasePlugin):
         
         return self._produce_renderable_items(changelog_content)
 
-    def _produce_renderable_items(self, changelog: list) -> list:
-        items = []
-        for _item in changelog:
-            item = dict()
-            item["time"] = list(_item.keys())[0]
-            changes = []
-            for _change in _item[item["time"]]:
-                change = dict()
-                change["type"] = list(_change.keys())[0]
-                change["content"] = _change[change["type"]]
-                changes.append(change)
-            item["changes"] = changes
-            items.append(item)
-        return items
+    def _produce_renderable_items(self, changelog: list) -> dict:
+        ret = dict()
+        for part in changelog:
+            placeholder = list(part.keys())[0]
+            content = part[placeholder]
+            items = []
+            for _item in content:
+                item = dict()
+                item["time"] = list(_item.keys())[0]
+                changes = []
+                for _change in _item[item["time"]]:
+                    change = dict()
+                    change["type"] = list(_change.keys())[0]
+                    change["content"] = _change[change["type"]]
+                    changes.append(change)
+                item["changes"] = changes
+                items.append(item)
+            ret[placeholder] = items
+        return ret
