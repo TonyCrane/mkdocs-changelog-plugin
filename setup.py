@@ -11,7 +11,7 @@ def read(fname):
 
 setup(
     name='mkdocs-changelog-plugin',
-    version='0.1.0',
+    version='0.1.1',
     author='TonyCrane',
     author_email='me@tonycrane.cc',
     description='A MkDocs plugin that create changelog in a page',
