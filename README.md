@@ -1,13 +1,16 @@
 # mkdocs-changelog-plugin
 
-> **Warning** 还在开发中，很可能只有我一个人能用（x
-
 一个用于在 mkdocs 文档中插入 changelog 时间轴的插件。
 
 预览：https://note.tonycrane.cc/changelog/
 
 ## 安装
-还在开发中，所以没有发布到 pypi，~~但你要想用我也不拦着~~，可以手动安装：
+可以通过 pypi 直接安装：
+```shell
+$ pip install mkdocs-changelog-plugin
+```
+
+也可以从源码安装
 
 ```shell
 $ git clone https://github.com/TonyCrane/mkdocs-changelog-plugin.git
@@ -79,15 +82,11 @@ $ pip install . # or pip install -e .
 
 具体可以参考[我的 changelog.yml](https://github.com/TonyCrane/note/blob/master/docs/changelog.yml)。
 
+### 主题适配
+感觉 mkdocs 主流主题只有 material 用得多了，所以没做其他主题的适配。基本上就差在几个颜色的问题上，问题不大，可以自己通过 css 来覆盖这里规定的颜色，具体看 css/timeline.css。
+
 ## 开发
 嘛，基本就是我用纯 html+css 糊出来自己用的，然后为了方便写了个插件，代码也比较乱，在别人的主题里面可能会~~格式混乱、颜色爆炸~~。有想修改、改进的我非常且热烈欢迎，尽管 PR 就好（
-
-### TODO
-虽然是老鸽子了，但还是象征性写一下接下来打算改进的内容：
-
-- [ ] 在其它主题上测试并改进
-- [x] 支持分部分（？就是全堆一起感觉会太长了，可能分开来比较好，而且还更随意一点）
-- [ ] 咕咕咕
 
 ## 参考
 - [timvink/mkdocs-git-revision-date-localized-plugin](https://github.com/timvink/mkdocs-git-revision-date-localized-plugin/)
