@@ -3,7 +3,6 @@ import re
 
 import yaml
 from jinja2 import Template
-from rich import print
 
 from mkdocs.config import config_options
 from mkdocs.plugins import BasePlugin
