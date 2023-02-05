@@ -13,15 +13,15 @@ from mkdocs.utils import copy_file
 from typing import Any, Dict
 
 PLUGIN_DIR = os.path.dirname(os.path.realpath(__file__))
-TEMPLATE_DIR = os.path.join(PLUGIN_DIR, 'templates/changelog.html')
+TEMPLATE_DIR = os.path.join(PLUGIN_DIR, "templates/changelog.html")
 
-with open(TEMPLATE_DIR, 'r') as file:
+with open(TEMPLATE_DIR, "r", encoding="utf-8") as file:
     TEMPLATE = file.read()
 
 class ChangelogPlugin(BasePlugin):
     config_scheme = (
-        ('enabled', config_options.Type(bool, default=True)),
-        ('file', config_options.Type(str, default='docs/changelog.yml')),
+        ("enabled", config_options.Type(bool, default=True)),
+        ("file", config_options.Type(str, default="docs/changelog.yml")),
     )
 
     enabled = True
@@ -30,7 +30,7 @@ class ChangelogPlugin(BasePlugin):
         if not self.enabled:
             return config
         
-        if not self.config.get('enabled'):
+        if not self.config.get("enabled"):
             return config
         
         config["extra_css"] = ["css/timeline.css"] + config["extra_css"]
@@ -41,7 +41,7 @@ class ChangelogPlugin(BasePlugin):
         if not self.enabled:
             return markdown
         
-        if not self.config.get('enabled'):
+        if not self.config.get("enabled"):
             return markdown
 
         if not page.meta.get("changelog"):
@@ -64,7 +64,7 @@ class ChangelogPlugin(BasePlugin):
         if not self.enabled:
             return
         
-        if not self.config.get('enabled'):
+        if not self.config.get("enabled"):
             return
         
         files = ["css/timeline.css"]
@@ -75,9 +75,9 @@ class ChangelogPlugin(BasePlugin):
             copy_file(src_file_path, dest_file_path)
     
     def _get_changelog_items(self) -> dict:
-        changelog_file = self.config.get('file')
+        changelog_file = self.config.get("file")
         
-        with open(changelog_file, "r") as f:
+        with open(changelog_file, "r", encoding="utf-8") as f:
             changelog_content = yaml.load(f, Loader=yaml.FullLoader)
         
         return self._produce_renderable_items(changelog_content)

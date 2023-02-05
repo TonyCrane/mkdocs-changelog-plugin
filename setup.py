@@ -11,7 +11,7 @@ def read(fname):
 
 setup(
     name='mkdocs-changelog-plugin',
-    version='0.1.1',
+    version='0.1.2',
     author='TonyCrane',
     author_email='me@tonycrane.cc',
     description='A MkDocs plugin that create changelog in a page',
@@ -38,11 +38,16 @@ setup(
         'Programming Language :: Python :: 3.9',
         'Programming Language :: Python :: 3.10'
     ],
-    packages=find_packages(exclude=['*.tests']),
     entry_points={
         'mkdocs.plugins': [
             'changelog = mkdocs_changelog_plugin.plugin:ChangelogPlugin'
         ]
     },
-    include_package_data=True
+    include_package_data=True,
+    package_data={
+        'mkdocs_changelog_plugin': [
+            'templates/*.html',
+            'css/*.css',
+        ]
+    }
 )
